@@ -6,7 +6,6 @@ from shapely.geometry import LineString, Polygon
 import copy
 from shapely.geometry import Point, Polygon
 from shapely.geometry.polygon import LinearRing, LineString
-from io import BytesIO
 
 
 # Function to plot the coordinates
@@ -102,14 +101,6 @@ def improve_race_line(old_line, inner_border, outer_border):
         new_line[i] = new_xi
     return new_line
 
-def create_download_link(loop_race_line):
-    """Create a download link for the numpy array."""
-    buffer = BytesIO()
-    np.save(buffer, loop_race_line)
-    buffer.seek(0)
-    return buffer
-
-
 
 ########################################################################################################
 # Streamlit app layout
@@ -195,14 +186,3 @@ if uploaded_file is not None:
         # Printing border and race line on the plot
         print_border(ax, loop_race_line, inner_border, outer_border)
         st.pyplot(fig)
-
-   
-
-        # Provide download button
-        buffer = create_download_link(loop_race_line)
-        st.download_button(
-            label="Download Optimal Race Line as .npy",
-            data=buffer,
-            file_name="optimal_track.npy",
-            mime="application/octet-stream"
-        )
