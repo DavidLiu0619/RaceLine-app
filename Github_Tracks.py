@@ -162,113 +162,69 @@ def create_download_link(loop_race_line):
     np.save(buffer, loop_race_line)
     buffer.seek(0)
     return buffer
-
+#####################################################################
 st.title('Race Track Visualization')
 
 # Ensure session state variables are initialized
 if 'waypoints' not in st.session_state:
     st.session_state.waypoints = None
 
-# Choose the source of the track file
 option = st.selectbox("Choose the source of the track file:", ["Upload File", "GitHub"])
 
 if option == "Upload File":
     uploaded_file = st.file_uploader("Upload your track file (.npy)", type="npy")
     if uploaded_file is not None:
         st.session_state.waypoints = np.load(uploaded_file, allow_pickle=True)
+        st.session_state.race_line = None  # Clear previous race line if new file uploaded
+
 elif option == "GitHub":
     selected_track = st.selectbox("Select a track", tracks)
     if st.button("Load Track from GitHub"):
-        # Load the data and store it in session state
         st.session_state.waypoints = load_npy_from_url(f"{base_url}{selected_track}")
+        st.session_state.race_line = None  # Clear previous race line if new track loaded
 
-# Check if waypoints are loaded
-if st.session_state['waypoints'] is not None:
-    waypoints = st.session_state['waypoints']
+if st.session_state.waypoints is not None:
+    waypoints = st.session_state.waypoints
     center_line = waypoints[:, 0:2]
     inner_border = waypoints[:, 2:4]
     outer_border = waypoints[:, 4:6]
 
-
-
-        # Plotting
-    fig, ax = plt.subplots(figsize=(16, 10), facecolor='black')
-    ax.set_aspect('equal')
-    ax.set_facecolor('black')  # Set the axes background color
-    fig.patch.set_facecolor('black')  # Set the figure background color
-
-    # Remove axis ticks
-    ax.tick_params(axis='both', colors='white')  # Make ticks white
-
-    # Set grid and labels with appropriate colors if necessary
-    ax.xaxis.label.set_color('white')
-    ax.yaxis.label.set_color('white')
-    ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5)  # Optional grid
-
-    print_border(ax, center_line, inner_border, outer_border)
-    
-    # Use Streamlit's function to display the plot
-    st.pyplot(fig)
-    # Set default iteration values
-    #LINE_ITERATIONS = 1000
-    #XI_ITERATIONS = 3
-    # Set default values and create sliders for dynamic adjustments
+    # Choose hyperparameters
     st.write("## Choose your Hyperparameters:")
-    st.markdown("- Number of Line Iterations: Number of times to scan the entire race track to iterate")
-    st.markdown("- Xi Iterations: Number of times to iterate each new race line point")
-
     LINE_ITERATIONS = st.slider('Number of Line Iterations', min_value=100, max_value=2000, value=500, step=100)
     XI_ITERATIONS = st.slider('Xi Iterations', min_value=3, max_value=10, value=5)
 
-    if st.button('Calculate Optimal Race Line'):
+    if st.button('Calculate Optimal Race Line') or 'race_line' not in st.session_state:
         race_line = copy.deepcopy(center_line[:-1])  # Start with a deep copy of the centerline
-
-        # Initialize a progress bar
         progress_bar = st.progress(0)
-        status_text = st.empty()
-
         for i in range(LINE_ITERATIONS):
-            race_line = improve_race_line(race_line, inner_border, outer_border)
-            
-            # Update progress bar and status text every 20 iterations
+            race_line = improve_race_line(race_line, inner_border, outer_border, XI_ITERATIONS)
             if i % 20 == 0:
                 progress_percentage = int(100 * (i / LINE_ITERATIONS))
                 progress_bar.progress(progress_percentage)
-                status_text.text(f"Computing... Iteration {i} of {LINE_ITERATIONS}")
-
-        # Complete the progress
         progress_bar.progress(100)
-        status_text.text("Calculation completed!")
+        st.session_state.race_line = np.vstack([race_line, race_line[0]])  # Close loop
 
-        # Closing the loop to make the race line continuous
-        loop_race_line = np.append(race_line, [race_line[0]], axis=0)
-
-        # Display shapes and lengths
-        original_length = LineString(center_line).length
-        new_length = LineString(loop_race_line).length
-        
-        st.write(f"Original centerline length: {original_length:.2f}")
-        st.write(f"New race line length: {new_length:.2f}")
-        st.write("## This is your Optimal Race Line")
-
-        # Plotting the track
+    if 'race_line' in st.session_state:
         fig, ax = plt.subplots(figsize=(16, 10), facecolor='black')
         ax.set_aspect('equal')
-        ax.set_facecolor('black')  # Set the axes background color
-        fig.patch.set_facecolor('black')  # Set the figure background color
-        # Remove axis ticks
-        ax.tick_params(axis='both', colors='white')  # Make ticks white
-        # Set grid and labels with appropriate colors if necessary
+        ax.set_facecolor('black')
+        fig.patch.set_facecolor('black')
+        ax.tick_params(axis='both', colors='white')
         ax.xaxis.label.set_color('white')
         ax.yaxis.label.set_color('white')
-        ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5)  # Optional grid
-        # Printing border and race line on the plot
-        print_border(ax, loop_race_line, inner_border, outer_border)
+        ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5)
+        print_border(ax, st.session_state.race_line, inner_border, outer_border)
         st.pyplot(fig)
 
+        # Length calculations
+        original_length = LineString(center_line).length
+        new_length = LineString(st.session_state.race_line).length
+        st.write(f"Original centerline length: {original_length:.2f}")
+        st.write(f"New race line length: {new_length:.2f}")
 
-        # Provide download button
-        buffer = create_download_link(loop_race_line)
+        # Download link
+        buffer = create_download_link(st.session_state.race_line)
         st.download_button(
             label="Download Optimal Race Line as .npy",
             data=buffer,
