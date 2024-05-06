@@ -156,6 +156,13 @@ def load_npy_from_url(url):
         st.error("Failed to load the file from URL.")
         return None
 
+def create_download_link(loop_race_line):
+    """Create a download link for the numpy array."""
+    buffer = BytesIO()
+    np.save(buffer, loop_race_line)
+    buffer.seek(0)
+    return buffer
+
 st.title('Race Track Visualization')
 
 # Choose the source of the track file
@@ -249,6 +256,16 @@ if 'waypoints' in locals():
         # Printing border and race line on the plot
         print_border(ax, loop_race_line, inner_border, outer_border)
         st.pyplot(fig)
+
+
+        # Provide download button
+        buffer = create_download_link(loop_race_line)
+        st.download_button(
+            label="Download Optimal Race Line as .npy",
+            data=buffer,
+            file_name="optimal_track.npy",
+            mime="application/octet-stream"
+        )
 
 
        
