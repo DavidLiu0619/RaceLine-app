@@ -235,6 +235,21 @@ if 'waypoints' in locals():
         st.write(f"New race line length: {new_length:.2f}")
         st.write("## This is your Optimal Race Line")
 
+        # Plotting the track
+        fig, ax = plt.subplots(figsize=(16, 10), facecolor='black')
+        ax.set_aspect('equal')
+        ax.set_facecolor('black')  # Set the axes background color
+        fig.patch.set_facecolor('black')  # Set the figure background color
+        # Remove axis ticks
+        ax.tick_params(axis='both', colors='white')  # Make ticks white
+        # Set grid and labels with appropriate colors if necessary
+        ax.xaxis.label.set_color('white')
+        ax.yaxis.label.set_color('white')
+        ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5)  # Optional grid
+        # Printing border and race line on the plot
+        print_border(ax, loop_race_line, inner_border, outer_border)
+        st.pyplot(fig)
+
 
        
 
