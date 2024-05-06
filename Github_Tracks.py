@@ -169,8 +169,6 @@ st.title('Race Track Visualization')
 if 'waypoints' not in st.session_state:
     st.session_state.waypoints = None
 
-st.title('Race Track Visualization')
-
 # Choose the source of the track file
 option = st.selectbox("Choose the source of the track file:", ["Upload File", "GitHub"])
 
