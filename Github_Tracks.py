@@ -191,7 +191,13 @@ if 'waypoints' in locals():
     
     # Use Streamlit's function to display the plot
     st.pyplot(fig)
-
+    # Set default iteration values
+    #LINE_ITERATIONS = 1000
+    #XI_ITERATIONS = 3
+    # Set default values and create sliders for dynamic adjustments
+    st.write("## Choose your Hyperparameters:")
+    st.markdown("- Number of Line Iterations: Number of times to scan the entire race track to iterate")
+    st.markdown("- Xi Iterations: Number of times to iterate each new race line point")
 
 
 
