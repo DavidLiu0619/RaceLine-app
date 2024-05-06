@@ -224,6 +224,18 @@ if 'waypoints' in locals():
         progress_bar.progress(100)
         status_text.text("Calculation completed!")
 
+        # Closing the loop to make the race line continuous
+        loop_race_line = np.append(race_line, [race_line[0]], axis=0)
+
+        # Display shapes and lengths
+        original_length = LineString(center_line).length
+        new_length = LineString(loop_race_line).length
+        
+        st.write(f"Original centerline length: {original_length:.2f}")
+        st.write(f"New race line length: {new_length:.2f}")
+        st.write("## This is your Optimal Race Line")
+
+
        
 
 
