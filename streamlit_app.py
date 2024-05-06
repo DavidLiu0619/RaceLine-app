@@ -6,6 +6,9 @@ from shapely.geometry import LineString, Polygon
 import copy
 from shapely.geometry import Point, Polygon
 from shapely.geometry.polygon import LinearRing, LineString
+import requests
+from io import BytesIO
+import copy
 
 
 # Function to plot the coordinates
