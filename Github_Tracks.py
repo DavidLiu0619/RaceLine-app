@@ -165,6 +165,12 @@ def create_download_link(loop_race_line):
 
 st.title('Race Track Visualization')
 
+# Ensure session state variables are initialized
+if 'waypoints' not in st.session_state:
+    st.session_state.waypoints = None
+
+st.title('Race Track Visualization')
+
 # Choose the source of the track file
 option = st.selectbox("Choose the source of the track file:", ["Upload File", "GitHub"])
 
@@ -179,11 +185,12 @@ elif option == "GitHub":
         st.session_state.waypoints = load_npy_from_url(f"{base_url}{selected_track}")
 
 # Check if waypoints are loaded
-if st.session_state.waypoints is not None:
-    waypoints = st.session_state.waypoints
+if st.session_state['waypoints'] is not None:
+    waypoints = st.session_state['waypoints']
     center_line = waypoints[:, 0:2]
     inner_border = waypoints[:, 2:4]
     outer_border = waypoints[:, 4:6]
+
 
 
         # Plotting
