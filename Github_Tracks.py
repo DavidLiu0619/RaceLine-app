@@ -199,6 +199,10 @@ if 'waypoints' in locals():
     st.markdown("- Number of Line Iterations: Number of times to scan the entire race track to iterate")
     st.markdown("- Xi Iterations: Number of times to iterate each new race line point")
 
+    LINE_ITERATIONS = st.slider('Number of Line Iterations', min_value=100, max_value=2000, value=500, step=100)
+    XI_ITERATIONS = st.slider('Xi Iterations', min_value=3, max_value=10, value=5)
+
+
 
 
 
