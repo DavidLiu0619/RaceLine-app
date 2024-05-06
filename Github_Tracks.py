@@ -202,6 +202,26 @@ if 'waypoints' in locals():
     LINE_ITERATIONS = st.slider('Number of Line Iterations', min_value=100, max_value=2000, value=500, step=100)
     XI_ITERATIONS = st.slider('Xi Iterations', min_value=3, max_value=10, value=5)
 
+    if st.button('Calculate Optimal Race Line'):
+        race_line = copy.deepcopy(center_line[:-1])  # Start with a deep copy of the centerline
+
+        # Initialize a progress bar
+        progress_bar = st.progress(0)
+        status_text = st.empty()
+
+        for i in range(LINE_ITERATIONS):
+            race_line = improve_race_line(race_line, inner_border, outer_border)
+            
+            # Update progress bar and status text every 20 iterations
+            if i % 20 == 0:
+                progress_percentage = int(100 * (i / LINE_ITERATIONS))
+                progress_bar.progress(progress_percentage)
+                status_text.text(f"Computing... Iteration {i} of {LINE_ITERATIONS}")
+
+        # Complete the progress
+        progress_bar.progress(100)
+        status_text.text("Calculation completed!")
+
 
 
 
