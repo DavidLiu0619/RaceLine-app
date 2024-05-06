@@ -171,16 +171,20 @@ option = st.selectbox("Choose the source of the track file:", ["Upload File", "G
 if option == "Upload File":
     uploaded_file = st.file_uploader("Upload your track file (.npy)", type="npy")
     if uploaded_file is not None:
-        waypoints = np.load(uploaded_file, allow_pickle=True)
+        st.session_state.waypoints = np.load(uploaded_file, allow_pickle=True)
 elif option == "GitHub":
     selected_track = st.selectbox("Select a track", tracks)
     if st.button("Load Track from GitHub"):
-        waypoints = load_npy_from_url(f"{base_url}{selected_track}")
+        # Load the data and store it in session state
+        st.session_state.waypoints = load_npy_from_url(f"{base_url}{selected_track}")
 
-if 'waypoints' in locals():
-    center_line = waypoints[:,0:2]
-    inner_border = waypoints[:,2:4]
-    outer_border = waypoints[:,4:6]
+# Check if waypoints are loaded
+if st.session_state.waypoints is not None:
+    waypoints = st.session_state.waypoints
+    center_line = waypoints[:, 0:2]
+    inner_border = waypoints[:, 2:4]
+    outer_border = waypoints[:, 4:6]
+
 
         # Plotting
     fig, ax = plt.subplots(figsize=(16, 10), facecolor='black')
