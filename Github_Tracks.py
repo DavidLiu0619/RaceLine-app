@@ -163,7 +163,7 @@ def create_download_link(loop_race_line):
     buffer.seek(0)
     return buffer
 #####################################################################
-st.title('Race Track Visualization')
+st.title('AWS DeepRacer Race Track Visualization')
 
 # Ensure session state variables are initialized
 if 'waypoints' not in st.session_state:
