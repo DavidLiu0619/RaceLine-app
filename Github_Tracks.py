@@ -164,6 +164,9 @@ def create_download_link(loop_race_line):
     return buffer
 #####################################################################
 st.title('AWS DeepRacer Race Track Visualization')
+st.markdown("- This web app is for calculating and visualize AWS DeepRacer Optimal Race Line.") 
+st.markdown("The code source is base on the https://github.com/dgnzlz/Capstone_AWS_DeepRacer/tree/master")
+
 
 # Ensure session state variables are initialized
 if 'waypoints' not in st.session_state:
