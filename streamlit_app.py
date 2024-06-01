@@ -6,6 +6,7 @@ from io import BytesIO
 from shapely.geometry import LineString
 import copy
 from shapely.geometry import Polygon, Point
+import matplotlib.colors as mcolors
 
 # Function to plot the coordinates
 def plot_coords(ax, ob):
