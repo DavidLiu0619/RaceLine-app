@@ -167,6 +167,7 @@ def create_download_link(loop_race_line):
 st.title('AWS DeepRacer Race Track Visualization')
 st.markdown("- This web app is for calculating and visualize AWS DeepRacer Optimal Race Line.") 
 st.markdown("- The code source is base on the https://github.com/dgnzlz/Capstone_AWS_DeepRacer/tree/master")
+st.markdown("- The Track can be downloaded from https://github.com/aws-deepracer-community/deepracer-race-data/tree/main/raw_data/tracks")
 st.markdown("- Make Sure the the Screen is NOT in SLEEP MODE When Calculate the Optimal Line.")
 
 
