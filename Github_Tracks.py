@@ -347,8 +347,7 @@ if page == "Original & Optimal Race Line Visualization":
                 file_name="optimal_track.npy",
                 mime="application/octet-stream"
             )
-if st.session_state.race_line_fig is not None:
-    st.pyplot(st.session_state.race_line_fig)
+
 ################################################################
 elif page == "Optimal Speed Calculation":
     st.title("Optimal Speed Calculation")
