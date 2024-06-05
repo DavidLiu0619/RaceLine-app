@@ -219,7 +219,17 @@ if page == "Origanl & Optimal Race Line Visualization":
     st.markdown("- The Web app references the code from https://github.com/dgnzlz/Capstone_AWS_DeepRacer/tree/master")
     st.markdown("- The Tracks can be downloaded from https://github.com/aws-deepracer-community/deepracer-race-data/tree/main/raw_data/tracks")
     st.markdown("- Make Sure the the Screen is NOT in SLEEP MODE When Calculate the Optimal Line.")
-    
+
+    # Ensure session state variables are initialized
+    if 'waypoints' not in st.session_state:
+        st.session_state.waypoints = None
+
+    if 'race_line_fig' not in st.session_state:
+        st.session_state.race_line_fig = None
+
+    if 'loop_race_line' not in st.session_state:
+        st.session_state.loop_race_line = None
+        
     
     # Ensure session state variables are initialized
     if 'waypoints' not in st.session_state:
@@ -264,6 +274,7 @@ if page == "Origanl & Optimal Race Line Visualization":
         print_border(ax, center_line, inner_border, outer_border)
         
         ax.set_title('Original Race Line', color='white', fontsize=20)
+        st.session_state.race_line_fig = fig
         st.pyplot(fig)
         
         # Set default iteration values
@@ -322,6 +333,8 @@ if page == "Origanl & Optimal Race Line Visualization":
             # Printing border and race line on the plot
             print_border(ax, loop_race_line, inner_border, outer_border)
             ax.set_title('Optimal Race Line', color='white', fontsize=20)
+            st.session_state.race_line_fig = fig
+            st.session_state.loop_race_line = loop_race_line
             st.pyplot(fig)
     
     
