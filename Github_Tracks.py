@@ -335,8 +335,8 @@ if page == "Original & Optimal Race Line Visualization":
             ax.set_title('Optimal Race Line', color='white', fontsize=20)
             st.session_state.race_line_fig = fig
             st.session_state.loop_race_line = loop_race_line
-            #st.pyplot(fig)
-            st.pyplot(loop_race_line)
+            st.pyplot(fig)
+            #st.pyplot(loop_race_line)
     
     
             # Provide download button
