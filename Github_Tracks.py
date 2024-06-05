@@ -270,6 +270,7 @@ if st.session_state['waypoints'] is not None:
         ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5)  # Optional grid
         # Printing border and race line on the plot
         print_border(ax, loop_race_line, inner_border, outer_border)
+        ax.set_title('Optimal Race Line', color='white', fontsize=20)
         st.pyplot(fig)
 
 
