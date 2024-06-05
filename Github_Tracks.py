@@ -293,14 +293,14 @@ elif page == "Optimal Speed Calculation":
     st.markdown("## Upload the Optimal Race Line (.npy) File to Calculate Speed Profile")
     optimal_race_line_file = st.file_uploader("Upload your optimal race line file (.npy)", type="npy")
     if optimal_race_line_file is not None:
-    fpath = optimal_race_line_file
-    TRACK_NAME = "optimal_track"
-    racing_track = np.load(fpath, allow_pickle=True).tolist()[:-1]
-    racing_track = [sublist[:2] for sublist in racing_track]
-
-    LOOK_AHEAD_POINTS = st.slider('Look Ahead Points', min_value=0, max_value=20, value=0)
-    MIN_SPEED = st.slider('Minimum Speed', min_value=0.1, max_value=4.0, value=1.5, step=0.1)
-    MAX_SPEED = st.slider('Maximum Speed', min_value=1.0, max_value=4.0, value=4.0, step=0.1)
+        fpath = optimal_race_line_file
+        TRACK_NAME = "optimal_track"
+        racing_track = np.load(fpath, allow_pickle=True).tolist()[:-1]
+        racing_track = [sublist[:2] for sublist in racing_track]
+    
+        LOOK_AHEAD_POINTS = st.slider('Look Ahead Points', min_value=0, max_value=20, value=0)
+        MIN_SPEED = st.slider('Minimum Speed', min_value=0.1, max_value=4.0, value=1.5, step=0.1)
+        MAX_SPEED = st.slider('Maximum Speed', min_value=1.0, max_value=4.0, value=4.0, step=0.1)
 
     if st.button("Calculate Optimal Speed"):
         velocity = optimal_velocity(track=racing_track, min_speed=MIN_SPEED, max_speed=MAX_SPEED, look_ahead_points=LOOK_AHEAD_POINTS)
