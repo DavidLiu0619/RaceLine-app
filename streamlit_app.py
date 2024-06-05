@@ -257,8 +257,12 @@ if st.session_state['waypoints'] is not None:
 
     print_border(ax, center_line, inner_border, outer_border)
     
-    # Use Streamlit's function to display the plot
+    # Add title to the plot
+    ax.set_title('AWS DeepRacer Optimal Race Line', color='white')
+    
     st.pyplot(fig)
+
+    
     # Set default iteration values
     #LINE_ITERATIONS = 1000
     #XI_ITERATIONS = 3
