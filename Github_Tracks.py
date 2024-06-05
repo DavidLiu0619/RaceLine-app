@@ -211,9 +211,9 @@ def dist_2_points(x1, x2, y1, y2):
     return abs(abs(x1-x2)**2 + abs(y1-y2)**2)**0.5
 #####################################################################
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Origanl & Optimal Race Line Visualization", "Optimal Speed Calculation"])
+page = st.sidebar.radio("Go to", ["Original & Optimal Race Line Visualization", "Optimal Speed Calculation"])
 
-if page == "Origanl & Optimal Race Line Visualization":
+if page == "Original & Optimal Race Line Visualization":
     st.title('AWS DeepRacer Race Track Visualization')
     st.markdown("- This Web app is for calculating and visualize AWS DeepRacer Optimal Race Line.") 
     st.markdown("- The Web app references the code from https://github.com/dgnzlz/Capstone_AWS_DeepRacer/tree/master")
@@ -335,7 +335,8 @@ if page == "Origanl & Optimal Race Line Visualization":
             ax.set_title('Optimal Race Line', color='white', fontsize=20)
             st.session_state.race_line_fig = fig
             st.session_state.loop_race_line = loop_race_line
-            st.pyplot(fig)
+            #st.pyplot(fig)
+            st.pyplot(loop_race_line)
     
     
             # Provide download button
