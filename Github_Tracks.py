@@ -288,7 +288,7 @@ if page == "Origanl & Optimal Race Line Visualization":
                 mime="application/octet-stream"
             )
 ################################################################
-elif page == “Optimal Speed Calculation”:
+elif page == "Optimal Speed Calculation":
     st.title(“Optimal Speed Calculation”)
     st.markdown(”## Upload the Optimal Race Line (.npy) File to Calculate Speed Profile”)
     optimal_race_line_file = st.file_uploader(“Upload your optimal race line file (.npy)”, type=“npy”)
