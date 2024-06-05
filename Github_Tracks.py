@@ -164,6 +164,9 @@ def create_download_link(loop_race_line):
     buffer.seek(0)
     return buffer
 #####################################################################
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Origanl & Optimal Race Line Visualization", "Optimal Speed Calculation"])
+
 st.title('AWS DeepRacer Race Track Visualization')
 st.markdown("- This Web app is for calculating and visualize AWS DeepRacer Optimal Race Line.") 
 st.markdown("- The Web app references the code from https://github.com/dgnzlz/Capstone_AWS_DeepRacer/tree/master")
