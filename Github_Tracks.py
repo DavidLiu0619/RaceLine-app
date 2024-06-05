@@ -212,8 +212,9 @@ if st.session_state['waypoints'] is not None:
 
     print_border(ax, center_line, inner_border, outer_border)
     
-    # Use Streamlit's function to display the plot
+    ax.set_title('Original Race Line', color='white', fontsize=20)
     st.pyplot(fig)
+    
     # Set default iteration values
     #LINE_ITERATIONS = 1000
     #XI_ITERATIONS = 3
