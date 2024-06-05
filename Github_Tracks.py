@@ -398,7 +398,8 @@ elif page == "Optimal Speed Calculation":
             x = [racing_track[i][0], racing_track[i+1][0]]
             y = [racing_track[i][1], racing_track[i+1][1]]
             ax.plot(x, y, color=cmap(norm(velocity[i])), linewidth=3)
-
+            
+        ax.set_title('Heatmap of Optimal Race Line with Optimal Speed', color='white', fontsize=20)
         st.pyplot(fig)
 
 
